@@ -1,0 +1,57 @@
+package com.javatechie.spring.data.jpa.api.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.javatechie.spring.data.jpa.api.dao.UserRepository;
+import com.javatechie.spring.data.jpa.api.model.User;
+
+@Service
+public class UserManager implements UserService {
+
+	@Autowired
+	private UserRepository userRepository;
+	
+	@PostConstruct
+	@Override
+	public void initDb() {
+		List<User> users = new ArrayList<>();
+		users.add(new User(111,"x","IT",23));
+		users.add(new User(678,"y","IT",25));
+		users.add(new User(542,"z","CIVIL",26));
+		users.add(new User(152,"p","",24));
+		users.add(new User(426,"q","GOVT",22));
+		
+		userRepository.saveAll(users);
+	}
+
+	@Override
+	public List<User> getUsers() {
+		
+		return userRepository.findAll();
+	}
+
+	@Override
+	public List<User> getUserByProfession(String profession) {
+		
+		return userRepository.findByProfession(profession);
+	}
+
+	@Override
+	public long getCounts(int age) {
+		
+		return userRepository.countByAge(age);
+	}
+
+	@Override
+	public List<User> deleteUser(String name) {
+		
+		return userRepository.deleteByName(name);
+	}
+
+}

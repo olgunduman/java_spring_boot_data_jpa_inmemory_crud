@@ -1,0 +1,5 @@
+package com.javatechie.spring.data.jpa.api.service;
+
+public class UserManager {
+
+}
